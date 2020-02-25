@@ -1,0 +1,78 @@
+﻿@model List<TodoList.Models.Tache>
+<!-- Pour le contrôleur Taches,  ajouter une vue nommée CreationGroupee, de type liste et utilisant l’entité Tache -->
+
+@{
+    ViewData["Title"] = "Creation Groupee";
+}
+
+<h1>Creation Groupee</h1>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Header {
+
+}
+
+<!-- Dans la vue CreationGroupee, créer le formulaire permettant de saisir le nombre de tâches à créer. Ce formulaire doit appeler une action InitSaisie de type Post -->
+<!-- Faire en sorte que tant que l’utilisateur n’a pas choisi un nombre de tâches, seul le premier formulaire soit visible. Puis, une fois le nombre de tâches choisi, que seul le second formulaire soit visible -->
+@if (Model == null)
+{
+    <form asp-action="InitSaisie">
+        <!-- Pour passer le nombre de tâches saisie à l’action, il suffit d’affecter à la zone de saisie un nom (propriété name) identique à celui du paramètre de l’action -->
+        <label>Nombre de tâches à créer : </label>
+        <input type="number" name="nbTaches" min="0" /> <!-- Pour passer le nombre de tâches saisie à l’action, il suffit d’affecter à la zone de saisie un nom (propriété name) identique à celui du paramètre de l’action -->
+        <input type="submit" class="btn btn-success" value="Créer" />
+    </form>
+}
+<!-- Ajouter le second formulaire qui affiche les tâches à compléter -->
+<!-- Le clic sur le bouton Enregistrer doit appeler une action CreationGroupee qui récupérera en paramètre la liste des tâches complétées par l’utilisateur -->
+<!-- Placer le tableau dans des conteneur div imbriqués de classes css « row » et « col-md-6 » -->
+<!-- Utiliser une boucle for et non foreach pour générer les lignes du tableau, afin que les tâches soient modifiables -->
+
+@if (Model != null)
+{
+    <form asp-action="CreationGroupee">
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model[0].DateEcheance)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count(); i++)
+                        {
+                            <tr>
+                                <td>
+                                    <textarea asp-for="@Model[i].Description" class="form-control"></textarea>
+                                </td>
+                                <td>
+                                    <input asp-for="@Model[i].DateEcheance" class="form-control" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-success" value="Enregistrer" />
+    </form>
+}
+
+<p>
+    <a asp-action="Index">Retour à la liste</a> <!-- En bas de la page, ajouter un lien « Retour à la liste » permettant de revenir à la liste des tâches à tout moment, en abandonnant la saisie éventuellement en cours. -->
+</p>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Footer {
+    <footer>
+        <p> &copy; 2020 - TodoList </p>
+    </footer>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,34 @@
+﻿@model TodoList.Models.Calcul
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<!-- Vue partielle vide nommée CalculsDates et ajouter une référence à cette vue dans la vue Index -->
+<!-- Implémenter le visuel défini plus haut en utilisant le positionnement et les styles BootStrap et un formulaire contenant des éléments input et label -->
+<!-- Il s’agit d’une calculatrice permettant de calculer une date à partir d’une date initiale et d’un nombre de jours qu’on ajoute. Le résultat s’affiche lorsqu’on clique sur le bouton =. -->
+    <form asp-action="calculdates" class="form-inline">
+        <input asp-for="BaseDate" class="form-control mb-2 mr-sm-2" id="baseDate">
+        <!-- asp-for="BaseDate" fait la liaison avec les propriétés de l'objet Calcul, utilise des attributs d'affichage sur les propriétés de l’entité Calcul pour que les zones de saisies s’adaptent aux types de données -->
+        <!-- <button class="btn btn-secondary mb-2" id="calcul">+</button> -->
+        <!-- Dans le formulaire de calcul de dates, remplacer le signe « + » par une liste déroulante permettant de choisir l’opération à effectuer (addition ou soustraction). Pour cela, utiliser un élément <select> contenant des éléments <option> -->
+        <!-- Modifier l’entité de modèle et l’action de contrôleur en conséquence -->
+        <select asp-for="Operator" class="form-control mb-2 mr-sm-2">
+            <option value="+">+</option>
+            <option value="-">-</option>
+        </select>
+        <div class="input-group mb-2 mr-sm-2">
+            <input asp-for="AddDays" class="form-control" id="adddays" placeholder="Nombre de jours">
+            <span class="input-group-text">Jours</span>
+        </div>
+        <button type="submit" class="btn btn-secondary mb-2" id="calcul">=</button>
+        <!-- L'action appliquée sur la forme se répercute automatiquement sur le boutton de type submit -->
+        <!-- <input asp-for="FinalDate" class="form-control mb-2 mr-sm-2" id="finalDate" readonly> -->
+        <input value="@ViewData["FinalDate"]" class="form-control mb-2 mr-sm-2" id="finalDate" readonly>
+        <!-- Utiliser l’attribut value au lieu de asp-for pour afficher la valeur -->
+        <div>
+            <span asp-validation-for="AddDays" class="text-danger"></span>
+            <!-- Afficher le message d'alerte si la valeur AddDays entrée n'est pas comprise entre 1 et 9999 -->
+        </div>
+    </form>
+<!-- Exercice Etape 7, dans la vue de l’utilitaire de calcul de dates, ajouter un lien « Télécharger le calendrier de l’année » -->
+<a href="Utilitaires/Download">Télécharger le calendrier de l’année</a>

@@ -1,0 +1,56 @@
+﻿@model TodoList.Models.Tache
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h1>Delete</h1>
+
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+    @section Header {
+        <h4>Tache</h4>
+    }
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateCreation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateCreation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateEcheance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateEcheance)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Terminee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Terminee)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Footer {
+    <footer>
+        <p> &copy; 2020 - TodoList </p>
+    </footer>
+}

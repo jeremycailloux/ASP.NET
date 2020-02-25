@@ -1,0 +1,26 @@
+﻿@model TodoList.Models.Tache
+
+<!-- Sur l’élément <form>, remettre le bon nom d’action et ajouter l’attribut id = "formCreateTask" pour identifier le formulaire et pouvoir y faire référence dans les vues qui l’utiliseront -->
+<form asp-action="Create" id="formCreateTask">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateCreation" class="control-label"></label>
+        <input asp-for="DateCreation" class="form-control" />
+        <span asp-validation-for="DateCreation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateEcheance" class="control-label"></label>
+        <input asp-for="DateEcheance" class="form-control" />
+        <span asp-validation-for="DateEcheance" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="Terminee" /> @Html.DisplayNameFor(model => model.Terminee)
+        </label>
+    </div>
+</form>

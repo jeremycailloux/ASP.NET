@@ -1,0 +1,68 @@
+﻿@model TodoList.Models.Tache
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Header {
+    <h4>Tache</h4>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <partial name="_FormCreate">
+            <!-- Dans la vue Create, remplacer le formulaire par la vue partielle _FormCreate créé précédemment, en gardant le bouton submit en-dessous -->
+            @*
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea> <!-- On remplace l'input par un textarea car l'input ne peut afficher plusieurs lignes -->
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateCreation" class="control-label"></label>
+                <input asp-for="DateCreation" class="form-control" />
+                <span asp-validation-for="DateCreation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateEcheance" class="control-label"></label>
+                <input asp-for="DateEcheance" class="form-control" />
+                <span asp-validation-for="DateEcheance" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Terminee" /> @Html.DisplayNameFor(model => model.Terminee)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+            *@
+
+            @*
+        @Html.Partial("_FormCreate")
+            *@
+
+</div>
+</div>
+<div>
+    <input form="formCreateTask" type="submit" value="Create" class="btn btn-primary" />
+    <!-- Ajouter l’attribut form="formCreateTask" sur le bouton submit afin de le relier au formulaire -->
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Footer {
+    <footer>
+        <p> &copy; 2020 - TodoList </p>
+    </footer>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

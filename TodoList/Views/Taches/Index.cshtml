@@ -1,0 +1,171 @@
+﻿@model List<TodoList.Models.Tache>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Header {
+
+}
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+    <!-- Faire en sorte que la vue CreationGroupee soit affichée par un lien intitulé « Saisie groupée de tâches », placé au-dessus du tableau des tâches de la vue Index. L’action appelée pour afficher la vue sera nommée « InitSaisie ». -->
+    <a asp-action="InitSaisie">Saisie groupée de tâches</a>
+
+    <!-- Dans la vue Index, ajouter le code donné de la section « Live Demo » de cette page de doc Bootstrap pour créer une fenêtre modale avec Bootstrap -->
+    <!-- Button trigger modal -->
+    <!-- Faire en sorte que la modale soit ouverte en cliquant sur un second lien de création de tâche, à côté de celui qui existe déjà. Pour cela, préciser les attributs data-toggle et data-target comme indiqué dans l’exemple de code fournit dans la doc Bootstrap -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" data-backdrop="static" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Dans le corps de cette modale, incorporez la vue partielle de la façon suivante -->
+                    <partial name="_FormCreate" model="@Model.Last()" />
+                    <!-- On prend le dernier élément de la liste du modèle qui partial qui est une liste -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" form="formCreateTask" type="submit">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</p>
+
+<!-- Dans la vue de la liste des tâches, entre le titre et le tableau, ajouter les éléments de filtres suivants: La zone de texte permet de filtrer les tâches dont la description contient le texte saisi et liste déroulante permet de filtrer les tâches selon leur état (terminées, non terminées, toutes) -->
+<form class="custom-control-inline" asp-action="Index" method="get">
+    <label class="input-group-text">Description contient</label> 
+    <input type="text" name="recherche"/> 
+    <label class="input-group-text">Etat</label> 
+    <select class="custom-select" asp-items="@(ViewBag.Etat)" name="etat">Etat</select> <!-- asp-items ici on récupère les valeurs du ViewBag.Etat défini dans le contrôleur -->
+    <button type="submit" class="btn btn-secondary">Filtrer</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => Model[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model[0].DateCreation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model[0].DateEcheance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => Model[0].Terminee)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @*
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateCreation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateEcheance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Terminee)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+    *@
+    <!-- Pour se faire on cré une nouvelle variable appelé tache que l'on initialise à la date du jour et que l'on injecte dans return View -->
+    <!-- Dans la vue Index, faire en sorte que cette tâche ne soit jamais affichée, ni comptabilisée dans les compteurs. On fait juste count - 1, et on affiche count - 1 avec une boucle for -->
+    <tbody>
+        @for (int i = 0; i < Model.Count() - 1; i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].DateCreation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].DateEcheance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model[i].Terminee)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Model[i].id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@Model[i].id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@Model[i].id">Delete</a>
+                </td>
+            </tr>
+        }
+
+        @*
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateCreation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateEcheance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Terminee)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                    </td>
+                </tr>
+            }
+        *@
+
+    </tbody>
+</table>
+
+<!-- Dans l’action Index du contrôleur Taches, stocker le nombre de tâches terminées dans le dictionnaire ViewData. Dans la vue correspondante, afficher une libellé « X tâche(s) terminée(s) sur Y » sous le titre. Le nombre total de tâches sera récupéré directement sur le modèle. Les « s » à la fin des mots ne doivent s’afficher que lorsque c’est nécessaire -->
+@{ViewData["NbFinishTasks"] = Model.Where(m => m.Terminee == true).Count();
+    // ViewData["texte"] = (int)ViewData["NbFinishTasks"] > 1 ? " Tâches terminées sur " : " Tâche terminées sur ";
+    ViewData["NbTasks"] = Model.Count() - 1; // La liste de tâches sert de model, défini tout en haut de cette page
+
+    /* ou bien */
+    if ((int)ViewData["NbFinishTasks"] > 1)
+    {
+        ViewData["texte"] = " Tâches terminées sur ";
+    }
+    else
+    {
+        ViewData["texte"] = " Tâche terminées sur ";
+    }
+
+}
+<p>@ViewData["NbFinishTasks"] @ViewData["texte"] @ViewData["NbTasks"]</p>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Footer {
+    <footer>
+        <p> &copy; 2020 - TodoList </p>
+    </footer>
+}

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<!-- Page de disposition qui s’applique automatiquement à toutes les vues de gestion de tâches -->
+<html>
+<head>
+    <!-- Reprendre les éléments <environnement> de la page de disposition par défaut, de façon à pouvoir utiliser la bibliothèque Bootstrap  -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+<body class="panel-body">
+    <!-- Le style du titre est obtenu avec la classe de style page-header de Bootstrap -->
+    <header class="page-header">
+        @RenderSection("Header")
+    </header>
+    <!-- Toute la zone à droite du menu est contenue dans un panel possédant un titre, un corps et un pied. Utiliser pour cela les classes de style panel, panel-heading, panel-body et panel-footer de Bootstrap -->ontainer-fluid">
+    <div class="row">
+        <div class="col-md-2 navbav-dark bg-dark rounded">
+            <ul class="nav flex-column">
+                <li class="nav-item border-top">
+                    <h1 class="text-light text-center" style="margin-top: 10px">TodoList</h1>
+                </li>
+                <li class="nav-item border-top">
+                    <a class="nav-link active text-light text-center" style="margin-top: 10px" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center" asp-controller="Taches" asp-action="Index">Tâches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center" asp-controller="Utilitaires" asp-action="Index">Utilitaires</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center" asp-controller="Home" asp-action="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center" asp-controller="Home" asp-action="ContactUs">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light text-center" asp-area="" asp-controller="Taches" asp-action="Statistiques">Statistiques</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="panel-footer">@RenderSection("Footer")</div>
+    </div>
+
+    <!-- Reprendre les éléments <environnement> de la page de disposition par défaut, de façon à pouvoir utiliser la bibliothèque Bootstrap  -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

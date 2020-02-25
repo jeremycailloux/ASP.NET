@@ -1,0 +1,45 @@
+﻿
+@model TodoList.Models.Statistiques
+
+@{
+    ViewData["Title"] = "Statistiques";
+}
+
+<h1>Statistiques</h1>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Header {}
+<!-- Créer une nouvelle vue « Statistiques » pour le contrôleur des tâches et faire en sorte qu’elle affiche les informations ci-dessus dans de simples libellés -->
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NbTachesEnCours)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NbTachesEnCours)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NbTachesTerminees)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NbTachesTerminees)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NbTachesRetard)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NbTachesRetard)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MoyenneTpsTaches)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MoyenneTpsTaches)
+        </dd>
+    </dl>
+</div>
+<!-- Modifier les vues de tâches pour qu’elles s’intègrent bien dans la disposition créée précédemment -->
+@section Footer {
+    <footer>
+        <p> &copy; 2020 - TodoList </p>
+    </footer>
+}
